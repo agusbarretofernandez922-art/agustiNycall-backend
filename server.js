@@ -9,7 +9,13 @@ const admin = require("firebase-admin");
 // Ese archivo NO se sube al frontend.
 // Ese archivo NO se comparte.
 // Ese archivo va solamente en este backend.
-const serviceAccount = require("./serviceAccountKey.json");
+let serviceAccount;
+
+try {
+  serviceAccount = require("/etc/secrets/serviceAccountKey.json");
+} catch (error) {
+  serviceAccount = require("./serviceAccountKey.json");
+}
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
